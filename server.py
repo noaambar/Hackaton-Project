@@ -190,7 +190,7 @@ def main():
     tcp.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     tcp.bind(("", 0))  # pick an available port
     tcp.listen(TCP_BACKLOG)
-
+    ip = get_local_ip()
     tcp_port = tcp.getsockname()[1]
     print(f"Server started, listening on IP address {ip} (TCP port {tcp_port})")
 
