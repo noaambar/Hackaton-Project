@@ -24,7 +24,7 @@ CLIENT_NAME = "Blackijecky-Client"
 TCP_CONNECT_TIMEOUT = 5.0
 TCP_READ_TIMEOUT = 60.0
 
-COOLDOWN_AFTER_SESSION = 2.0  # avoids reconnecting immediately on the next offer
+COOLDOWN_AFTER_SESSION = 0.0  # option to avoid reconnecting immediately on the next offer
 
 
 def ask_rounds() -> int:
@@ -104,7 +104,6 @@ def play_session(tcp: socket.socket, rounds: int):
                 print("[CLIENT] Player bust locally. Waiting for server final result...")
                 while True:
                     result2, r2, s2 = _read_one_server_payload(tcp)
-                    print("[CLIENT] Server card:", card_to_string((r2, s2)))
                     if result2 != RESULT_NOT_OVER:
                         txt = _result_to_text(result2)
                         print("[CLIENT] Round result:", txt)
@@ -124,10 +123,15 @@ def play_session(tcp: socket.socket, rounds: int):
 
             if decision == "Stand":
                 # Dealer phase: read until result != NOT_OVER
+                revealed_hole = False
                 while True:
                     result, rank, suit = _read_one_server_payload(tcp)
                     dealer_cards.append((rank, suit))
-                    print("[CLIENT] Dealer card:", card_to_string((rank, suit)))
+                    if not revealed_hole:
+                        print("[CLIENT] Dealer reveals hole:", card_to_string((rank, suit)))
+                        revealed_hole = True
+                    else:
+                        print("[CLIENT] Dealer draws:", card_to_string((rank, suit)))
 
                     if result != RESULT_NOT_OVER:
                         txt = _result_to_text(result)
