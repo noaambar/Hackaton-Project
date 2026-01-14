@@ -20,7 +20,7 @@ from protocol import (
 
 from game import create_deck, hand_value, card_to_string
 
-SERVER_NAME = "Blackijecky"
+SERVER_NAME = "Reliable Dealers"
 TCP_BACKLOG = 50
 
 # Timeouts (seconds)

@@ -18,7 +18,7 @@ from protocol import (
 
 from game import card_to_string, hand_value
 
-CLIENT_NAME = "Blackijecky-Client"
+CLIENT_NAME = "Hittt Happens"
 
 # Timeouts
 TCP_CONNECT_TIMEOUT = 5.0
